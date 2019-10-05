@@ -3,6 +3,7 @@
 > A Minecraft Server
 
 * [Heroku Dashboard](https://dashboard.heroku.com/apps)
+* [`mc-dart`](https://mc-dart.herokuapp.com/)
 
 ---
 
