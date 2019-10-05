@@ -9,7 +9,8 @@
 ## Links & Resources
 
 * [`heroku-buildpack-minecraft`](https://github.com/jkutner/heroku-buildpack-minecraft)
-* [Minecraft Server Download](https://www.minecraft.net/en-us/download/server/)
+* [ngrok setup and usage](https://dashboard.ngrok.com/get-started)
+* [Minecraft server download](https://www.minecraft.net/en-us/download/server/)
 * [server.properties](https://minecraft.gamepedia.com/Server.properties)
 
 ---
