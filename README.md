@@ -9,5 +9,6 @@
 ## Links & Resources
 
 * [`heroku-buildpack-minecraft`](https://github.com/jkutner/heroku-buildpack-minecraft)
+* [`server.properties`](https://minecraft.gamepedia.com/Server.properties)
 
 ---
