@@ -1,9 +1,6 @@
 # MC-Server
 
-> A Minecraft Server
-
-* [Heroku Dashboard](https://dashboard.heroku.com/apps)
-* [`mc-dart`](https://mc-dart.herokuapp.com/)
+> Instructions for hosting a Minecraft Server on Heroku.
 
 ---
 
@@ -11,6 +8,9 @@
 
 * [`heroku-buildpack-minecraft`](https://github.com/jkutner/heroku-buildpack-minecraft)
 * [ngrok setup and usage](https://dashboard.ngrok.com/get-started)
+
+[](.)
+
 * [Minecraft server download](https://www.minecraft.net/en-us/download/server/)
 * [server.properties](https://minecraft.gamepedia.com/Server.properties)
 
@@ -21,44 +21,48 @@
 This is a [Heroku Buildpack](https://devcenter.heroku.com/articles/buildpacks)
 for running a Minecraft server in a [dyno](https://devcenter.heroku.com/articles/dynos).
 
+---
+
 ### Usage
 
 Create a [free ngrok account](https://ngrok.com/) and copy your Auth token. Then create a new Git project with a `eula.txt` file:
 
-```sh-session
-$ echo 'eula=true' > eula.txt
-$ git init
-$ git add eula.txt
-$ git commit -m "first commit"
+```bash
+echo 'eula=true' > eula.txt
+git init
+git add eula.txt
+git commit -m "first commit"
 ```
 
 Then, install the [Heroku toolbelt](https://toolbelt.heroku.com/).
 Create a Heroku app, set your ngrok token, and push:
 
-```sh-session
-$ heroku create
-$ heroku buildpacks:add heroku/python
-$ heroku buildpacks:add heroku/jvm
-$ heroku buildpacks:add jkutner/minecraft
-$ heroku config:set NGROK_API_TOKEN="xxxxx"
-$ git push heroku master
+```bash
+heroku create
+heroku buildpacks:add heroku/python
+heroku buildpacks:add heroku/jvm
+heroku buildpacks:add jkutner/minecraft
+heroku config:set NGROK_API_TOKEN="xxxxx"
+git push heroku master
 ```
 
 Finally, open the app:
 
-```sh-session
-$ heroku open
+```bash
+heroku open
 ```
 
 This will display the ngrok logs, which will contain the name of the server
 (really it's a proxy, but whatever):
 
-```sh-session
+```bash
 Server available at: 0.tcp.ngrok.io:17003
 ```
 
 Copy the `0.tcp.ngrok.io:17003` part, and paste it into your local Minecraft app
 as the server name.
+
+---
 
 ### Syncing to S3
 
@@ -71,13 +75,15 @@ Thus, if you want to keep you world, you'll need to sync it to S3.
 First, create an [AWS account](https://aws.amazon.com/) and an S3 bucket. Then configure the bucket
 and your AWS keys like this:
 
-```sh-session
-$ heroku config:set AWS_BUCKET=your-bucket-name
-$ heroku config:set AWS_ACCESS_KEY=xxx
-$ heroku config:set AWS_SECRET_KEY=xxx
+```bash
+heroku config:set AWS_BUCKET=your-bucket-name
+heroku config:set AWS_ACCESS_KEY=xxx
+heroku config:set AWS_SECRET_KEY=xxx
 ```
 
 The buildpack will sync your world to the bucket every 60 seconds, but this is configurable by setting the `AWS_SYNC_INTERVAL` config var.
+
+---
 
 ### Connecting to the server console
 
@@ -85,7 +91,7 @@ The Minecraft server runs inside a `screen` session. You can use [Heroku Exec](h
 
 Once you have Heroku Exec installed, you can connect to the console using
 
-```sh-session
+```bash
 $ heroku ps:exec
 Establishing credentials... done
 Connecting to web.1 on ⬢ lovely-minecraft-2351...
@@ -95,22 +101,24 @@ $ screen -r minecraft
 **WARNING** You are now connected to the Minecraft server. Use `Ctrl-A Ctrl-D` to exit the screen session.
 (If you hit `Ctrl-C` while in the session, you'll terminate the Minecraft server.)
 
+---
+
 ### Customizing
 
 #### ngrok
 
 You can customize ngrok by setting the `NGROK_OPTS` config variable. For example:
 
-```sh-session
-$ heroku config:set NGROK_OPTS="--remote-addr 1.tcp.ngrok.io:25565"
+```bash
+heroku config:set NGROK_OPTS="--remote-addr 1.tcp.ngrok.io:25565"
 ```
 
 #### Minecraft
 
 You can choose the Minecraft version by setting the MINECRAFT_VERSION like so:
 
-```sh-session
-$ heroku config:set MINECRAFT_VERSION="1.8.3"
+```bash
+heroku config:set MINECRAFT_VERSION="1.8.3"
 ```
 
 You can also configure the server properties by creating a `server.properties`
